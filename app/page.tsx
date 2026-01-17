@@ -32,7 +32,7 @@ export default function Home() {
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-4 text-center relative">
         <h1 className="text-2xl font-bold tracking-tight">IN & OUT</h1>
-        <p className="text-sm opacity-80">Track your hydration</p>
+        <p className="text-sm opacity-80">Volg je hydratatie</p>
 
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
           {!connectionStatus.checked ? (
@@ -95,7 +95,7 @@ export default function Home() {
             }`}
           >
             <Waves className="w-6 h-6" />
-            <span className="text-xs mt-1">Pee</span>
+            <span className="text-xs mt-1">Output</span>
           </button>
         </div>
       </nav>
