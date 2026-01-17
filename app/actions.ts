@@ -2,10 +2,14 @@
 
 import { Redis } from "@upstash/redis"
 
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-})
+const isConfigured = !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
+
+const redis = isConfigured
+  ? new Redis({
+      url: process.env.KV_REST_API_URL!,
+      token: process.env.KV_REST_API_TOKEN!,
+    })
+  : null
 
 function getDateKey(date: Date = new Date()) {
   return date.toISOString().split("T")[0]
@@ -22,6 +26,10 @@ function getDatesInRange(days: number): string[] {
 }
 
 export async function logDrink(glasses: number) {
+  if (!redis) {
+    return { success: false, error: "Redis not configured" }
+  }
+
   const dateKey = getDateKey()
   const entry = {
     glasses,
@@ -37,6 +45,10 @@ export async function logDrink(glasses: number) {
 }
 
 export async function logPee(type: "normal" | "accident") {
+  if (!redis) {
+    return { success: false, error: "Redis not configured" }
+  }
+
   const dateKey = getDateKey()
   const entry = {
     type,
@@ -52,6 +64,17 @@ export async function logPee(type: "normal" | "accident") {
 }
 
 async function getDayStats(dateKey: string) {
+  if (!redis) {
+    return {
+      date: dateKey,
+      drinks: [],
+      pees: [],
+      totalGlasses: 0,
+      normalPees: 0,
+      accidents: 0,
+    }
+  }
+
   const drinks = (await redis.get<any[]>(`drinks:${dateKey}`)) || []
   const pees = (await redis.get<any[]>(`pees:${dateKey}`)) || []
 
@@ -78,5 +101,27 @@ export async function getStats() {
     today,
     week: week.filter((d) => d.drinks.length > 0 || d.pees.length > 0),
     month: month.filter((d) => d.drinks.length > 0 || d.pees.length > 0),
+  }
+}
+
+export async function checkConnection(): Promise<{
+  connected: boolean
+  error?: string
+}> {
+  if (!isConfigured) {
+    return {
+      connected: false,
+      error: "Redis environment variables not configured (KV_REST_API_URL, KV_REST_API_TOKEN)",
+    }
+  }
+
+  try {
+    await redis!.ping()
+    return { connected: true }
+  } catch (e) {
+    return {
+      connected: false,
+      error: e instanceof Error ? e.message : "Failed to connect to Redis",
+    }
   }
 }
