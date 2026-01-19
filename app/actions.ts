@@ -125,3 +125,34 @@ export async function checkConnection(): Promise<{
     }
   }
 }
+
+export async function deleteDrinkEntry(dateKey: string, timestamp: string) {
+  if (!redis) {
+    return { success: false, error: "Redis not configured" }
+  }
+
+  const key = `drinks:${dateKey}`
+  const existing = (await redis.get<any[]>(key)) || []
+  const filtered = existing.filter((entry) => entry.timestamp !== timestamp)
+  await redis.set(key, filtered)
+
+  return { success: true }
+}
+
+export async function deletePeeEntry(dateKey: string, timestamp: string) {
+  if (!redis) {
+    return { success: false, error: "Redis not configured" }
+  }
+
+  const key = `pees:${dateKey}`
+  const existing = (await redis.get<any[]>(key)) || []
+  const filtered = existing.filter((entry) => entry.timestamp !== timestamp)
+  await redis.set(key, filtered)
+
+  return { success: true }
+}
+
+export async function getTodayEntries() {
+  const dateKey = getDateKey()
+  return getDayStats(dateKey)
+}

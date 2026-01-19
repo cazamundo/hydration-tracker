@@ -1,16 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Droplets, Waves, BarChart3, Wifi, WifiOff } from "lucide-react"
+import { Droplets, Waves, BarChart3, Wifi, WifiOff, Settings } from "lucide-react"
 import { DrinkTab } from "@/components/drink-tab"
 import { PeeTab } from "@/components/pee-tab"
 import { OverviewTab } from "@/components/overview-tab"
+import { ManageEntries } from "@/components/manage-entries"
 import { checkConnection } from "./actions"
 
 type Tab = "overview" | "drink" | "pee"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("drink")
+  const [showManage, setShowManage] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState<{
     checked: boolean
     connected: boolean
@@ -27,10 +29,22 @@ export default function Home() {
     })
   }, [])
 
+  if (showManage) {
+    return <ManageEntries onClose={() => setShowManage(false)} />
+  }
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-primary text-primary-foreground p-4 text-center relative">
+        <button
+          onClick={() => setShowManage(true)}
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 hover:bg-primary-foreground/10 rounded-lg transition-colors"
+          aria-label="Beheren"
+        >
+          <Settings className="w-5 h-5" />
+        </button>
+
         <h1 className="text-2xl font-bold tracking-tight">IN & OUT</h1>
         <p className="text-sm opacity-80">Volg je hydratatie</p>
 
