@@ -1,6 +1,7 @@
 # Hydration Tracker
 
 A PWA for tracking water intake and bathroom visits. Built with Next.js 16, React 19, and Tailwind CSS.
+Made in 15 minutes with v0. :-)
 
 ## Local Development
 
