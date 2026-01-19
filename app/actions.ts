@@ -156,3 +156,20 @@ export async function getTodayEntries() {
   const dateKey = getDateKey()
   return getDayStats(dateKey)
 }
+
+export async function getAllEntries() {
+  const dates = getDatesInRange(30)
+  const allStats = await Promise.all(dates.map(getDayStats))
+  return allStats.filter((d) => d.drinks.length > 0 || d.pees.length > 0)
+}
+
+export async function deleteDay(dateKey: string) {
+  if (!redis) {
+    return { success: false, error: "Redis not configured" }
+  }
+
+  await redis.del(`drinks:${dateKey}`)
+  await redis.del(`pees:${dateKey}`)
+
+  return { success: true }
+}
