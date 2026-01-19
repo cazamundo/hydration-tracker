@@ -10,6 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "IN & OUT",
   description: "Track your hydration - water intake and bathroom visits",
+  generator: "v0.app",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

@@ -1,63 +1,30 @@
-# Hydration Tracker
+# Hydration Tracker App
 
-A PWA for tracking water intake and bathroom visits. Built with Next.js 16, React 19, and Tailwind CSS.
-Made in 15 minutes with v0. :-)
+*Automatically synced with your [v0.app](https://v0.app) deployments*
 
-## Local Development
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/happy-client/v0-hydration-tracker-app)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/mYzJQqaDcqb)
 
-### Prerequisites
+## Overview
 
-- Node.js 18+
-- pnpm (or npm/yarn)
-- An Upstash Redis database
+This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
+Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
 
-### Setup
+## Deployment
 
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
-   cd hydration-tracker
-   ```
+Your project is live at:
 
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
+**[https://vercel.com/happy-client/v0-hydration-tracker-app](https://vercel.com/happy-client/v0-hydration-tracker-app)**
 
-3. Create a `.env.local` file with your Upstash Redis credentials:
-   ```
-   KV_REST_API_URL=https://your-database.upstash.io
-   KV_REST_API_TOKEN=your-token-here
-   ```
+## Build your app
 
-   You can get these from the [Upstash Console](https://console.upstash.com/) after creating a Redis database.
+Continue building your app on:
 
-4. Start the development server:
-   ```bash
-   pnpm dev
-   ```
+**[https://v0.app/chat/mYzJQqaDcqb](https://v0.app/chat/mYzJQqaDcqb)**
 
-5. Open [http://localhost:3000](http://localhost:3000)
+## How It Works
 
-## Deploy on Vercel
-
-1. Push this repository to GitHub
-
-2. Import the project in [Vercel](https://vercel.com/new)
-
-3. Add environment variables in Vercel project settings:
-   - `KV_REST_API_URL` - Your Upstash Redis REST URL
-   - `KV_REST_API_TOKEN` - Your Upstash Redis REST token
-
-   Alternatively, use Vercel's [Upstash integration](https://vercel.com/integrations/upstash) to automatically provision and configure a Redis database.
-
-4. Deploy
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `KV_REST_API_URL` | Upstash Redis REST API URL |
-| `KV_REST_API_TOKEN` | Upstash Redis REST API token |
-
-The app will show a "not connected" indicator if these variables are missing or invalid.
+1. Create and modify your project using [v0.app](https://v0.app)
+2. Deploy your chats from the v0 interface
+3. Changes are automatically pushed to this repository
+4. Vercel deploys the latest version from this repository
